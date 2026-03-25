@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Interview</title>
+
+  <style>
+    body {
+      font-family: Arial;
+      margin: 0;
+      background: #f5f7fa;
+    }
+
+    /* HEADER */
+    header {
+      background: linear-gradient(90deg,#4f46e5,#6366f1);
+      color: white;
+      padding: 15px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header button {
+      margin-left: 10px;
+      padding: 8px 14px;
+      border: none;
+      background: white;
+      color: #4f46e5;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    /* HERO */
+    .hero {
+      background: linear-gradient(135deg,#4f46e5,#818cf8);
+      color: white;
+      text-align: center;
+      padding: 80px 20px;
+    }
+
+    .hero h1 {
+      font-size: 42px;
+      margin-bottom: 10px;
+    }
+
+    .hero p {
+      opacity: 0.9;
+    }
+
+    /* PACKAGES */
+    .packages {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      padding: 60px 20px;
+      flex-wrap: wrap;
+    }
+
+    .card {
+      background: white;
+      padding: 30px;
+      border-radius: 16px;
+      width: 260px;
+      text-align: center;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      transition: 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+    }
+
+    .price {
+      font-size: 32px;
+      color: #4f46e5;
+      margin: 15px 0;
+      font-weight: bold;
+    }
+
+    .card button {
+      background: linear-gradient(90deg,#4f46e5,#6366f1);
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      width: 100%;
+      font-weight: bold;
+    }
+
+    /* MODAL */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .box {
+      background: white;
+      padding: 45px 35px;
+      border-radius: 16px;
+      width: 360px;
+      position: relative;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity:0; transform: scale(0.9); }
+      to { opacity:1; transform: scale(1); }
+    }
+
+    .close {
+      position: absolute;
+      top: 12px;
+      right: 15px;
+      font-size: 20px;
+      cursor: pointer;
+      color: #999;
+    }
+
+    .box h3 {
+      margin-bottom: 20px;
+    }
+
+    .box input {
+      width: 100%;
+      max-width: 280px;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+    }
+
+    .box button {
+      width: 100%;
+      max-width: 280px;
+      padding: 12px;
+      margin-top: 15px;
+      background: linear-gradient(90deg,#4f46e5,#6366f1);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h2>AI Interview</h2>
+  <div>
+    <button onclick="openLogin()">Đăng nhập</button>
+    <button onclick="openRegister()">Đăng ký</button>
+  </div>
+</header>
+
+<section class="hero">
+  <h1>Luyện phỏng vấn cùng AI</h1>
+  <p>Tăng cơ hội đậu phỏng vấn với AI thông minh</p>
+</section>
+
+<section class="packages">
+  <div class="card">
+    <h3>Basic</h3>
+    <p class="price">49K</p>
+    <p>Phỏng vấn cơ bản với AI</p>
+    <button onclick="buy('Basic')">Mua ngay</button>
+  </div>
+
+  <div class="card">
+    <h3>Premium</h3>
+    <p class="price">99K</p>
+    <p>Phỏng vấn nâng cao + feedback chi tiết</p>
+    <button onclick="buy('Premium')">Mua ngay</button>
+  </div>
+</section>
+
+<!-- LOGIN -->
+<div class="modal" id="loginModal" onclick="outsideClick(event, 'loginModal')">
+  <div class="box">
+    <span class="close" onclick="closeAll()">✖</span>
+    <h3>Đăng nhập</h3>
+    <input placeholder="Email">
+    <input type="password" placeholder="Mật khẩu">
+    <button onclick="login()">Đăng nhập</button>
+  </div>
+</div>
+
+<!-- REGISTER -->
+<div class="modal" id="registerModal" onclick="outsideClick(event, 'registerModal')">
+  <div class="box">
+    <span class="close" onclick="closeAll()">✖</span>
+    <h3>Đăng ký</h3>
+    <input placeholder="Email">
+    <input type="password" placeholder="Mật khẩu">
+    <input type="password" placeholder="Nhập lại mật khẩu">
+    <button onclick="register()">Đăng ký</button>
+  </div>
+</div>
+
+<script>
+function openLogin(){ document.getElementById('loginModal').style.display='flex'; }
+function openRegister(){ document.getElementById('registerModal').style.display='flex'; }
+
+function login(){ alert('Login thành công (demo)'); closeAll(); }
+function register(){ alert('Đăng ký thành công (demo)'); closeAll(); }
+
+function buy(plan){ alert('Bạn chọn gói ' + plan); }
+
+function closeAll(){
+  document.getElementById('loginModal').style.display='none';
+  document.getElementById('registerModal').style.display='none';
+}
+
+function outsideClick(e, id){
+  if(e.target.id === id){ closeAll(); }
+}
+</script>
+
+</body>
+</html>
